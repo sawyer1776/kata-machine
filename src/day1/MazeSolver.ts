@@ -4,6 +4,7 @@ const dir = [
     [0, -1],
     [0, 1],
 ];
+
 function walk(
     maze: string[],
     wall: string,
@@ -16,22 +17,27 @@ function walk(
         curr.x < 0 ||
         curr.x >= maze[0].length ||
         curr.y < 0 ||
-        curr.y >= maze.length
-    )
-        return false;
-    if (maze[curr.y][curr.x] === wall) {
+        curr.y > maze.length
+    ) {
         return false;
     }
+
     if (curr.x === end.x && curr.y === end.y) {
         path.push(end);
         return true;
     }
+
+    if (maze[curr.y][curr.x] === wall) {
+        return false;
+    }
     if (seen[curr.y][curr.x]) {
         return false;
     }
-    seen[curr.y][curr.x] = true;
+    //pre
     path.push(curr);
-    //recurese
+    seen[curr.y][curr.x] = true;
+
+    //rec
     for (let i = 0; i < dir.length; i++) {
         const [x, y] = dir[i];
         if (
@@ -43,6 +49,7 @@ function walk(
 
     //post
     path.pop();
+
     return false;
 }
 
